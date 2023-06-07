@@ -12,7 +12,7 @@ class Planet(models.Model):
     mass = models.FloatField(null=True)
     number_of_satellites = models.IntegerField(null=True)
     surface_area = models.FloatField(null=True)
-    potential_for_life_percent = models.BooleanField(default=True)
+    potential_for_life_percent = models.DecimalField(max_digits=5, decimal_places=2, default=0)
     available_land_area = models.FloatField(null=True)
     average_land_price = models.IntegerField(null=True)
     infrastructure_information = models.TextField(blank=True)
