@@ -1,13 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
-# Create your models here.
-from django.contrib.auth.models import User
-
-
 class User(AbstractUser):
-    bio = models.TextField(max_length=500, blank=True)
-    location = models.CharField(max_length=30, blank=True)
-    birth_date = models.DateField(null=True, blank=True)
-
+    logo = models.TextField(default='mongrol.svg', null=True)
+    wallet = models.IntegerField(default=0)
+    color = models.CharField(max_length=7, default='#FF6666')
+    telegramName = models.CharField(max_length=7, null=True)
+    status = models.TextField(null=True)
 
