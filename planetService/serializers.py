@@ -46,6 +46,7 @@ class PlanetSerializer(serializers.ModelSerializer):
 
     def get_textures(self, obj):
         directory = os.path.join(settings.MEDIA_ROOT, 'textures', obj.name)
+
         if os.path.exists(directory) and os.path.isdir(directory):
             return directory_tree(directory, [obj.name], {})
         return []

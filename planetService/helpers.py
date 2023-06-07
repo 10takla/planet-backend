@@ -10,8 +10,9 @@ def directory_tree(path, dirs=[], result={}):
             directory_tree(pt, dirs + [dir_name], result[dir_name])
         if os.path.isfile(pt):
             for img_name in os.listdir(path):
-                result[img_name.split('.')[0]] = settings.BASE_URL + os.path.join(
-                    settings.MEDIA_URL, "textures", '/'.join(dirs), img_name)
+                result[img_name.split('.')[0]] = os.path.join(
+                    "textures", '/'.join(dirs), img_name)
+
     return result
 
 
