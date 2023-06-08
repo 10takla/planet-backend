@@ -10,6 +10,7 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.permissions import AllowAny
 
+
 class UpdateUserView(generics.UpdateAPIView):
     queryset = User.objects.all()
     serializer_class = UpdateUserSerializer
@@ -42,12 +43,11 @@ class CheckTokenView(APIView):
     def post(self, request):
         user = request.user
         serialize_user = UserSerializer(user, context={'mode': 'conf_user'})
-
         token = request.auth
         return Response({'token': str(token), **serialize_user.data})
 
 
-class LoginUserView(APIView):
+class SignUserView(APIView):
     authentication_classes = []
     permission_classes = [AllowAny]
     queryset = User.objects.all()
@@ -56,14 +56,15 @@ class LoginUserView(APIView):
         username = request.data.get('username')
         password = request.data.get('password')
 
-        try:
-            user = authenticate(username=username, password=password)
+        user = authenticate(username=username, password=password)
+
+        if user:
             token, created = Token.objects.get_or_create(user=user)
             serializer_user = UserSerializer(user, context={'mode': 'conf_user'})
             return Response({"token": token.key, **serializer_user.data})
-        except:
-            return Response({'username': [''], 'password': [''], 'message': ['Неверный логин или пароль']},
-                            status=status.HTTP_401_UNAUTHORIZED)
+
+        return Response({'username': [''], 'password': [''], 'message': ['Неверный логин или пароль']},
+                        status=status.HTTP_401_UNAUTHORIZED)
 
 
 class CreateUserView(generics.CreateAPIView):
@@ -80,7 +81,6 @@ class CreateUserView(generics.CreateAPIView):
         if serializer.is_valid():
             user = serializer.save()
             serializer_user = UserSerializer(user, context={'mode': 'conf_user'})
-
             token, _ = Token.objects.get_or_create(user=user)
             response = Response({'token': token.key, **serializer_user.data}, status=status.HTTP_201_CREATED)
             response.set_cookie('auth_token', token.key)

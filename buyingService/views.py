@@ -99,7 +99,6 @@ class BuyingCreateView(CreateAPIView):
             raise ValidationError("Участок не продается")
         if user.wallet < cost:
             raise ValidationError("Недостаточно средств на балансе для покупки этого участка.")
-        print(owner)
         buying = Buying.objects.create(plot=plot_query, buyer=user, cost=cost, owner=owner.get('id'))
         user.wallet -= cost
         user.save()

@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'rest_framework.authtoken',
     'userService',
     'planetService',
     'buyingService',
@@ -56,7 +57,6 @@ CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOWED_ORIGINS = [
     '*',
 ]
-
 
 ROOT_URLCONF = 'planets.urls'
 
@@ -87,14 +87,31 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+# DATABASES = {
+#     'default': dj_database_url.parse(os.getenv('DATABASE_URL'))
+# }
+
 DATABASES = {
-    'default': dj_database_url.parse(os.getenv('DATABASE_URL'))
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'HOST': 'localhost',
+        'PORT': '3307',
+        'NAME': 'buyplanets',
+        'USER': 'root',
+        'PASSWORD': '',
+    }
 }
 
-AUTH_USER_MODEL = 'userService.User'
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'userService.backends.UserBackend',
+]
 
-# Password validation
-# https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
+AUTHENTICATION_BACKENDS_ADMIN = [
+    'django.contrib.auth.backends.ModelBackend',
+]
+
+AUTH_USER_MODEL = 'userService.User'
 
 AUTH_PASSWORD_VALIDATORS = [
     {

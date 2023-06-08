@@ -11,7 +11,7 @@ class BlenderApi:
     blend_file_path = "C:/Users/letif\OneDrive/Рабочий стол/" + name_blend
     script_name = os.path.join(settings.BASE_DIR, 'planetService/blenderApi/script_text.py')
     configs = {
-        "EXPORT_PATH": "C:/Users/letif/PycharmProjects/pythonProject/buyplanet/media/models/planets/"
+        "EXPORT_PATH": "C:/Users/letif/PycharmProjects/pythonProject7/planets/media/models/planets/"
     }
 
     def __init__(self, planets: list, export_path: str = None):
