@@ -74,7 +74,14 @@ class PlotSerializer(serializers.ModelSerializer):
     basket = serializers.SerializerMethodField()
     surfaceArea = serializers.SerializerMethodField()
     owner = UserSerializer()
-
+    # owner = serializers.SerializerMethodField()
+    #
+    # def get_owner(self, obj):
+    #     buying = obj.buying_set.select_related('buyer').order_by('-date').first()
+    #     if buying:
+    #         buying_serializer = BuyingSerializer(buying)
+    #         return buying_serializer.data.get('buyer')
+    #     return None
 
     def get_surfaceArea(slf, obj):
         return obj.planet.surface_area * obj.area
