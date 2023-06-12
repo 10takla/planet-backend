@@ -97,6 +97,9 @@ class BuyingCreateView(CreateAPIView):
         if user.wallet < cost:
             raise ValidationError("Недостаточно средств на балансе для покупки этого участка.")
         buying = Buying.objects.create(plot=plot_query, buyer=user, cost=cost, owner=owner.get('id') if owner else None)
+        plot_query.owner = user
+        plot_query.save()
+
         user.wallet -= cost
         user.save()
         sert = BuyingSerializer(buying, context={'request': self.request})

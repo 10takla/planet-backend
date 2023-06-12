@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 
+
 class Planet(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255, unique=True)
@@ -29,6 +30,7 @@ class Plot(models.Model):
     name = models.CharField(unique=True, null=False, max_length=755)
     planet = models.ForeignKey('Planet', on_delete=models.CASCADE, null=False)
     area = models.FloatField(null=True)
+    owner = models.ForeignKey('userService.User', on_delete=models.CASCADE, null=True)
     price = models.IntegerField(null=True, default=0)
     markUp = models.IntegerField(default=0)
     location = models.TextField(blank=True)
@@ -46,4 +48,3 @@ class Plot(models.Model):
         defaults = kwargs
         obj, created = self.objects.update_or_create(name=name, defaults=defaults)
         return obj, created
-

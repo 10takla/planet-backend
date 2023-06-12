@@ -42,6 +42,7 @@ class CreatePlots(APIView):
                     mesh=plot["mesh"],
                     color='#' + ''.join(random.choices(string.hexdigits[:16], k=6)),
                     area=plot["area"],
+                    owner=user,
                     price=plot["area"] * price * 8,
                     isSale=0 if user and random.random() > 0.2 else 1,
                     markUp=random.randint(0, 20) * (plot["area"] * price * 8) / 100 if user else 0,

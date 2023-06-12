@@ -6,7 +6,7 @@ from planetService.helpers import directory_tree
 from buyingService.serializers import BuyingSerializer, BasketSerializer
 from buyingService.models import Buying, Basket
 from django.db.models import F, Max, Q
-
+from userService.serializer import UserSerializer
 
 class PlanetSerializer(serializers.ModelSerializer):
     textures = serializers.SerializerMethodField()
@@ -73,14 +73,8 @@ class PlotSerializer(serializers.ModelSerializer):
     cost = serializers.SerializerMethodField()
     basket = serializers.SerializerMethodField()
     surfaceArea = serializers.SerializerMethodField()
-    owner = serializers.SerializerMethodField()
+    owner = UserSerializer()
 
-    def get_owner(self, obj):
-        buying = obj.buying_set.select_related('buyer').order_by('-date').first()
-        if buying:
-            buying_serializer = BuyingSerializer(buying)
-            return buying_serializer.data.get('buyer')
-        return None
 
     def get_surfaceArea(slf, obj):
         return obj.planet.surface_area * obj.area
