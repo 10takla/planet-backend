@@ -1,15 +1,13 @@
 from rest_framework import serializers
 from .models import Buying, Basket
 from userService.serializer import UserSerializer
-from userService.models import User
-from planetService.models import Plot
-from django.shortcuts import get_object_or_404
+from planetService.serializers.firstViews_serializers import PlotFirstViewSerializer
 
 class BuyingSerializer(serializers.ModelSerializer):
-    buyer = UserSerializer(read_only=True)
+    buyer = UserSerializer(read_only=True, context={'mode': 'conf_user'})
     owner = UserSerializer(read_only=True)
     cost = serializers.ReadOnlyField()
-    plot = serializers.PrimaryKeyRelatedField(queryset=Plot.objects.all())
+    plot = PlotFirstViewSerializer(read_only=True)
 
     class Meta:
         model = Buying

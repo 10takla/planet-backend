@@ -1,8 +1,8 @@
 from rest_framework import serializers
 import os
-from .models import Planet, Plot
+from planetService.models import Planet, Plot
 from django.conf import settings
-from .helpers import directory_tree
+from planetService.helpers import directory_tree
 from buyingService.serializers import BuyingSerializer, BasketSerializer
 from buyingService.models import Buying, Basket
 from django.db.models import F, Max, Q
@@ -76,7 +76,7 @@ class PlotSerializer(serializers.ModelSerializer):
     owner = serializers.SerializerMethodField()
 
     def get_owner(self, obj):
-        buying = obj.buying_set.order_by('-date').first()
+        buying = obj.buying_set.select_related('buyer').order_by('-date').first()
         if buying:
             buying_serializer = BuyingSerializer(buying)
             return buying_serializer.data.get('buyer')

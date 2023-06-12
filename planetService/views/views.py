@@ -6,7 +6,7 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticate
 from rest_framework.response import Response
 
 from ..models import Planet, Plot
-from ..serializers import PlanetSerializer, PlotSerializer, PlotUpdateSerializer
+from planetService.serializers.serializers import PlanetSerializer, PlotSerializer, PlotUpdateSerializer
 
 
 class BaseViewSet(viewsets.ModelViewSet):

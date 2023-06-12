@@ -1,18 +1,15 @@
-from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
 from .models import Transaction, Basket, Buying
 from rest_framework.generics import CreateAPIView, DestroyAPIView
 from rest_framework.views import APIView
-from .serializers import BasketSerializer, BuyingSerializer, BuyingCreateSerializer
+from .serializers import BasketSerializer, BuyingSerializer
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import TokenAuthentication
-from planetService.serializers import PlotSerializer
+from planetService.serializers.serializers import PlotSerializer
 from planetService.models import Plot
 from rest_framework.exceptions import ValidationError
 from rest_framework import status
 from rest_framework.response import Response
 from web3 import Web3
-from userService.models import User
 from rest_framework.status import HTTP_400_BAD_REQUEST
 
 def check_transaction(transaction_hash):
@@ -99,7 +96,7 @@ class BuyingCreateView(CreateAPIView):
             raise ValidationError("Участок не продается")
         if user.wallet < cost:
             raise ValidationError("Недостаточно средств на балансе для покупки этого участка.")
-        buying = Buying.objects.create(plot=plot_query, buyer=user, cost=cost, owner=owner.get('id'))
+        buying = Buying.objects.create(plot=plot_query, buyer=user, cost=cost, owner=owner.get('id') if owner else None)
         user.wallet -= cost
         user.save()
         sert = BuyingSerializer(buying, context={'request': self.request})
