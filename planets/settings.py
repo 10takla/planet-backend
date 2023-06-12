@@ -90,19 +90,15 @@ from dotenv import load_dotenv
 load_dotenv()
 
 DATABASES = {
-    'default': dj_database_url.parse(os.getenv('DATABASE_URL'))
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'HOST': 'localhost',
+        'PORT': '3307',
+        'NAME': 'buyplanets',
+        'USER': 'root',
+        'PASSWORD': '',
+    }
 }
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'HOST': 'localhost',
-#         'PORT': '3307',
-#         'NAME': 'buyplanets',
-#         'USER': 'root',
-#         'PASSWORD': '',
-#     }
-# }
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
