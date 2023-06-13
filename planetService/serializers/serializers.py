@@ -6,7 +6,7 @@ from planetService.helpers import directory_tree
 from buyingService.serializers import BuyingSerializer, BasketSerializer
 from buyingService.models import Buying, Basket
 from django.db.models import F, Max, Q
-from userService.serializer import UserSerializer, UserStartSerilizer
+from userService.serializer import UserSerializer
 
 class PlanetSerializer(serializers.ModelSerializer):
     textures = serializers.SerializerMethodField()
@@ -88,11 +88,9 @@ class PlotSerializer(serializers.ModelSerializer):
 
     def get_basket(self, obj):
         request = self.context.get('request')
-        # print( self.context)
         if request:
             user = request.user
             plot = obj
-            # print(user, plot)
             queryset = Basket.objects.filter(user=user, plot=plot).first()
             if queryset:
                 serializer = BasketSerializer(queryset)
