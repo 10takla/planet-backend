@@ -73,7 +73,7 @@ class PlotSerializer(serializers.ModelSerializer):
     cost = serializers.SerializerMethodField()
     basket = serializers.SerializerMethodField()
     surfaceArea = serializers.SerializerMethodField()
-    owner = UserStartSerilizer()
+    owner = UserSerializer()
     # owner = serializers.SerializerMethodField()
     #
     # def get_owner(self, obj):
