@@ -73,30 +73,34 @@ class UpdateUserSerializer(BaseUserSerializer):
             for field_name in all_fields - fields:
                 self.fields.pop(field_name)
 
+class UserStartSerilizer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id', 'username']
 
 class UserSerializer(serializers.ModelSerializer):
-    # plotsCount = serializers.SerializerMethodField()
-    # rank = serializers.SerializerMethodField()
-    # plotsCapital = serializers.SerializerMethodField()
+    plotsCount = serializers.SerializerMethodField()
+    rank = serializers.SerializerMethodField()
+    plotsCapital = serializers.SerializerMethodField()
 
-    # def get_plotsCount(self, user):
-    #     return Plot.objects.filter(owner=user).count()
-    #
-    # def get_rank(self, obj):
-    #     users_plots_count = User.objects.annotate(num_plots=Count('plot')).order_by('-num_plots')
-    #     rank = list(users_plots_count).index(obj) + 1
-    #     return rank
-    #
-    # def get_plotsCapital(self, user):
-    #     total_capital = Plot.objects.filter(owner=user).aggregate(total=Sum('price'))['total']
-    #     return total_capital or 0
+    def get_plotsCount(self, user):
+        return Plot.objects.filter(owner=user).count()
+
+    def get_rank(self, obj):
+        users_plots_count = User.objects.annotate(num_plots=Count('plot')).order_by('-num_plots')
+        rank = list(users_plots_count).index(obj) + 1
+        return rank
+
+    def get_plotsCapital(self, user):
+        total_capital = Plot.objects.filter(owner=user).aggregate(total=Sum('price'))['total']
+        return total_capital or 0
 
     class Meta:
         model = User
         fields = ['id', 'username', 'email', 'wallet', 'logo', 'color', 'telegramName', 'status',
-                  # 'plotsCapital',
-                  # 'rank',
-                  # 'plotsCount'
+                  'plotsCapital',
+                  'rank',
+                  'plotsCount'
                   ]
 
     def __init__(self, *args, **kwargs):
