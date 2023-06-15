@@ -4,9 +4,9 @@ from .models import Plot, Planet
 
 class PlotAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'planet', 'owner', 'area', 'price', 'markUp', 'location',
-                    'description', 'available_for_sale', 'mesh','color','isSale')
+                    'description', 'mesh','color','isSale')
     list_editable = ('name', 'planet', 'area', 'owner', 'price', 'markUp', 'location', 'description',
-                     'available_for_sale', 'mesh', 'color',)
+                 'mesh', 'color',)
 
 
 admin.site.register(Plot, PlotAdmin)

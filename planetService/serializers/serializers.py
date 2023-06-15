@@ -74,31 +74,17 @@ class PlotSerializer(serializers.ModelSerializer):
     basket = serializers.SerializerMethodField()
     surfaceArea = serializers.SerializerMethodField()
     owner = UserSerializer()
-    # owner = serializers.SerializerMethodField()
-    #
-    # def get_owner(self, obj):
-    #     buying = obj.buying_set.select_related('buyer').order_by('-date').first()
-    #     if buying:
-    #         buying_serializer = BuyingSerializer(buying)
-    #         return buying_serializer.data.get('buyer')
-    #     return None
 
     def get_surfaceArea(slf, obj):
         return obj.planet.surface_area * obj.area
 
-    def get_basket(self, obj):
+    def get_basket(self, plot):
         request = self.context.get('request')
-        if request:
-            user = request.user
-            plot = obj
-            queryset = Basket.objects.filter(user=user, plot=plot).first()
-            if queryset:
-                serializer = BasketSerializer(queryset)
-                return serializer.data
-            else:
-                return None
-        else:
-            return None
+        if request.user.is_authenticated:
+            queryset = Basket.objects.filter(user=request.user.id, plot=plot).first()
+            serializer = BasketSerializer(queryset)
+            return serializer.data
+        return None
 
     class Meta:
         model = Plot

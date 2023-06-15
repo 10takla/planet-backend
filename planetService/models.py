@@ -35,7 +35,6 @@ class Plot(models.Model):
     markUp = models.IntegerField(default=0)
     location = models.TextField(blank=True)
     description = models.TextField(blank=True)
-    available_for_sale = models.BooleanField(default=True)
     mesh = models.JSONField(null=False)
     color = models.CharField(max_length=7, blank=True)
     isSale = models.BooleanField(default=True)
