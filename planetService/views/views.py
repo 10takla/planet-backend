@@ -50,17 +50,19 @@ class StarViewSet(BaseViewSet):
     def list(self, request, *args, **kwargs):
         response = super().list(request, *args, **kwargs)
         data = response.data
+
         return Response(data)
 
 
 class PlanetViewSet(BaseViewSet):
-    queryset = Planet.objects.all()
+    queryset = Planet.objects.order_by('id')
     serializer_class = PlanetSerializer
     lookup_url_kwarg = 'id_planet'
 
     def list(self, request, *args, **kwargs):
         response = super().list(request, *args, **kwargs)
         data = response.data
+        print(data)
         return Response(data)
 
 

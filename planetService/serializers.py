@@ -15,6 +15,7 @@ class SpaceBodySerializer(serializers.ModelSerializer):
     class Meta:
         model = SpaceBody
         fields = "__all__"
+        ordering = ['id']
 
     def get_textures(self, obj):
         directory = os.path.join(settings.MEDIA_ROOT, 'textures', obj.name)
