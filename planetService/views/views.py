@@ -6,7 +6,7 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticate
 from rest_framework.response import Response
 
 from ..models import Planet, Plot
-from planetService.serializers.serializers import PlanetSerializer, PlotSerializer, PlotUpdateSerializer
+from planetService.serializers import PlanetSerializer, PlotSerializer, PlotUpdateSerializer, Star, StarSerializer
 
 
 class BaseViewSet(viewsets.ModelViewSet):
@@ -42,6 +42,17 @@ class BaseViewSet(viewsets.ModelViewSet):
         return context
 
 
+class StarViewSet(BaseViewSet):
+    queryset = Star.objects.all()
+    serializer_class = StarSerializer
+    lookup_url_kwarg = 'id_star'
+
+    def list(self, request, *args, **kwargs):
+        response = super().list(request, *args, **kwargs)
+        data = response.data
+        return Response(data)
+
+
 class PlanetViewSet(BaseViewSet):
     queryset = Planet.objects.all()
     serializer_class = PlanetSerializer
@@ -49,9 +60,7 @@ class PlanetViewSet(BaseViewSet):
 
     def list(self, request, *args, **kwargs):
         response = super().list(request, *args, **kwargs)
-
         data = response.data
-
         return Response(data)
 
 

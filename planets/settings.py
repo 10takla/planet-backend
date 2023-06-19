@@ -57,7 +57,6 @@ MIDDLEWARE = [
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOWED_ORIGINS = [
     'https://10takla.github.io/planet-frontend/',
-
 ]
 
 

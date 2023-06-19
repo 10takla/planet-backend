@@ -1,7 +1,7 @@
 5
 #CONF_START
-EXPORT_PATH = 'C:/Users/letif/PycharmProjects/pythonProject7/planets/media/models/planets/'
-PLANETS = {'Mercury': 40, 'Venus': 30, 'Earth': 55, 'Mars': 80, 'Jupiter': 120, 'Saturn': 400, 'Uranus': 260, 'Neptune': 20, 'Pluto': 20, 'Ceres': 20, 'Haumea': 20, 'Makemake': 20, 'Eris': 20}
+EXPORT_PATH = None
+PLANETS = {'Меркурий': 40, 'Венера': 50, 'Земля': 30, 'Марс': 55, 'Юпитер': 42, 'Сатурн': 45, 'Уран': 55}
 #CONF_END
 import bpy
 

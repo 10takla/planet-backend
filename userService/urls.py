@@ -12,6 +12,6 @@ urlpatterns2 = [
 
 urlpatterns = [
     path('<int:id_user>/', userViews.UserView.as_view()),
-    path('<str:user>/planets/', include('planetService.urls')),
+    path('<str:user>/space/', include('planetService.urls')),
     path('me/', include(urlpatterns2), name='user-detail'),
 ]

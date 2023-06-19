@@ -28,6 +28,7 @@ class CreatePlots(APIView):
         planets = instance.create_plots()
         users = User.objects.all()
         Buying.objects.all().delete()
+        Plot.objects.all().delete()
         for planet in planets:
             for plot in planet["plots"]:
                 probability = random.random()

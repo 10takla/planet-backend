@@ -11,7 +11,8 @@ class BlenderApi:
     blend_file_path = "C:/Users/letif\OneDrive/Рабочий стол/" + name_blend
     script_name = os.path.join(settings.BASE_DIR, 'planetService/blenderApi/script_text.py')
     configs = {
-        "EXPORT_PATH": "C:/Users/letif/PycharmProjects/pythonProject7/planets/media/models/planets/"
+        # "EXPORT_PATH": "C:/Users/letif/PycharmProjects/pythonProject7/planets/media/models/planets/",
+        "EXPORT_PATH": None
     }
 
     def __init__(self, planets: list, export_path: str = None):
@@ -28,7 +29,8 @@ class BlenderApi:
         if planets and len(planets):
             planets_conf = {}
             for planet in planets:
-                planets_conf[planet.name] = planet.plots_count
+                if planet.plots_count >= 6:
+                    planets_conf[planet.name] = planet.plots_count
 
             self.configs["PLANETS"] = planets_conf
         if export_path:
@@ -65,20 +67,21 @@ class BlenderApi:
     def parse(self, parse: str):
         return_planets = []
         planets = parse.split('START')[1].split("END")[0].split("NEXT")
-        for id_planet, planet in enumerate(planets):
-            planet_name, vertices, faces, centers, area = planet.split('|')
-            vertices, faces, centers, area = [eval(i) for i in [vertices, faces, centers, area]]
+        if planets != ['']:
+            for id_planet, planet in enumerate(planets):
+                planet_name, vertices, faces, centers, area = planet.split('|')
+                vertices, faces, centers, area = [eval(i) for i in [vertices, faces, centers, area]]
 
-            return_plots = []
-            for i, face in enumerate(faces):
-                return_plot = {
-                    "plot_name": '_Plot_'.join([planet_name, str(i)]),
-                    "mesh": {"vertices": vertices[i], "faces": face, "center": centers[i]},
-                    "area": area[i],
-                }
-                return_plots.append(return_plot)
+                return_plots = []
+                for i, face in enumerate(faces):
+                    return_plot = {
+                        "plot_name": '_Plot_'.join([planet_name, str(i)]),
+                        "mesh": {"vertices": vertices[i], "faces": face, "center": centers[i]},
+                        "area": area[i],
+                    }
+                    return_plots.append(return_plot)
 
-            return_planet = {"planet_id": self.planets[id_planet].id, "plots": return_plots}
-            return_planets.append(return_planet)
+                return_planet = {"planet_id": self.planets[id_planet].id, "plots": return_plots}
+                return_planets.append(return_planet)
 
         return return_planets

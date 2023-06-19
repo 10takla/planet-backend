@@ -1,10 +1,10 @@
 from .models import Transaction, Basket, Buying
 from rest_framework.generics import CreateAPIView, DestroyAPIView
 from rest_framework.views import APIView
-from .serializers import BasketSerializer, BuyingSerializer
+from buyingService.serializers.create_serializers import BasketCreateSerializer, BuyingCreateSerializer
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import TokenAuthentication
-from planetService.serializers.serializers import PlotSerializer
+from planetService.serializers import PlotSerializer
 from planetService.models import Plot
 from rest_framework.exceptions import ValidationError
 from rest_framework import status
@@ -51,7 +51,7 @@ class BasketCreateView(CreateAPIView):
     authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated,)
     queryset = Basket
-    serializer_class = BasketSerializer
+    serializer_class = BasketCreateSerializer
 
     def create(self, request, *args, **kwargs):
         plot_id = self.request.query_params.get('plot')
@@ -59,7 +59,7 @@ class BasketCreateView(CreateAPIView):
 
         plot_query = Plot.objects.get(id=plot_id)
         buying = Basket.objects.create(user=user, plot=plot_query)
-        sert = BasketSerializer(buying)
+        sert = BasketCreateSerializer(buying)
         return Response(sert.data, status=status.HTTP_201_CREATED)
 
 
@@ -67,7 +67,7 @@ class BasketDeleteView(DestroyAPIView):
     authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated,)
     queryset = Basket
-    serializer_class = BasketSerializer
+    serializer_class = BasketCreateSerializer
     lookup_url_kwarg = 'id_basket'
 
     def get_queryset(self):
@@ -78,7 +78,7 @@ class BuyingCreateView(CreateAPIView):
     authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated,)
     queryset = Buying
-    serializer_class = BuyingSerializer
+    serializer_class = BuyingCreateSerializer
 
     def create(self, request, *args, **kwargs):
         plot_id = self.request.query_params.get('plot')
@@ -102,7 +102,7 @@ class BuyingCreateView(CreateAPIView):
 
         user.wallet -= cost
         user.save()
-        sert = BuyingSerializer(buying, context={'request': self.request})
+        sert = BuyingCreateSerializer(buying, context={'request': self.request})
         return Response(sert.data, status=status.HTTP_201_CREATED)
 
 
@@ -110,7 +110,7 @@ class BuyingDeleteView(DestroyAPIView):
     authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated,)
     queryset = Buying
-    serializer_class = BuyingSerializer
+    serializer_class = BuyingCreateSerializer
     lookup_url_kwarg = 'id_buying'
 
     def get_queryset(self):
