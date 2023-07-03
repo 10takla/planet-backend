@@ -108,11 +108,11 @@ class PlanetSerializer(SpaceBodySerializer):
 class PlotSerializer(serializers.ModelSerializer):
     planet = PlanetSerializer(context={"fields": ["textures", "color"]})
     storyBuying = serializers.SerializerMethodField()
-    # cost = serializers.SerializerMethodField()
     basket = serializers.SerializerMethodField()
     surfaceArea = serializers.SerializerMethodField()
     owner = UserSerializer()
     cost = serializers.SerializerMethodField()
+
     class Meta:
         model = Plot
         fields = "__all__"

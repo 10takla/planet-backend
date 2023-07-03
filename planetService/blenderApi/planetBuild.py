@@ -30,6 +30,7 @@ class BlenderApi:
             planets_conf = {}
             for planet in planets:
                 if planet.plots_count >= 6:
+                    print(planet.name,  planet.plots_count)
                     planets_conf[planet.name] = planet.plots_count
 
             self.configs["PLANETS"] = planets_conf

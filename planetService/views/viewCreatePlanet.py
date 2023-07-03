@@ -23,7 +23,7 @@ class CreatePlots(APIView):
     authentication_classes = [TokenAuthentication]
 
     def get(self, response):
-        planets = Planet.objects.all()
+        planets = Planet.objects.order_by('id')
         instance = BlenderApi(planets)
         planets = instance.create_plots()
         users = User.objects.all()

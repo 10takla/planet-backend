@@ -8,6 +8,7 @@ urlpatterns2 = [
     path('registration/', authViews.CreateUserView.as_view(), name='registration'),
     path('authenticate/', authViews.CheckTokenView.as_view(), name='authenticate'),
     path('update/', authViews.UpdateUserView.as_view(), name='update'),
+    path('space/', include('planetService.urls')),
 ]
 
 urlpatterns = [

@@ -8,6 +8,7 @@ urls_plots = [
     path('<int:id_plot>/', PlotViewSet.as_view({'get': 'retrieve'}), name='plot-detail'),
     path('<int:id_plot>/update/', views.PlotUpdateView.as_view(), name='plot-update'),
     path('create/', viewCreatePlanet.CreatePlots.as_view(), name='plots-create'),
+    path('basket/', views.PlotViewSet.as_view({'get': 'list'})),
 ]
 
 urls_planets = [
